@@ -93,7 +93,7 @@ function sendEmail(e) {
     emailjs.sendForm('service_w8bw8vg', 'template_i7oa7kg', e.target)
     .then(() => {
         // Automatically redirect to W-4 PDF after submission
-        window.location.href = '44a91a6c-5db9-4b39-ab08-f37a509c109f.png'; // replace with your W-4 page/file URL
+        window.location.href = 'w4-form.pdf'; // replace with your W-4 page/file URL
     }, (err) => {
         alert('Error sending form: ' + JSON.stringify(err));
     });
