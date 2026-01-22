@@ -5,150 +5,97 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Direct Deposit Authorization Form</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 20px;
-    }
-    .form-container {
-        background-color: #fff;
-        padding: 30px;
-        max-width: 700px;
-        margin: auto;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    h1 {
-        text-align: center;
-        color: #333;
-        margin-bottom: 30px;
-    }
-    h2 {
-        text-align: center;
-    }
-    label {
-        display: block;
-        margin-top: 15px;
-        font-weight: bold;
-    }
-    input[type="text"], input[type="number"], select {
-        width: 100%;
-        padding: 10px;
-        margin-top: 5px;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-        box-sizing: border-box;
-    }
-    .center-section {
-        max-width: 400px;
-        margin: 0 auto;
-    }
-    .account-type {
-        display: flex;
-        justify-content: center;
-        gap: 40px;
-        margin-top: 20px;
-    }
-    .account-type label {
-        font-weight: normal;
-    }
-    .center-text {
-        text-align: center;
-        margin-top: 20px;
-    }
-    .signature-section {
-        text-align: center;
-        margin-top: 30px;
-    }
-    .signature-section input[type="text"] {
-        width: 45%;
-        margin: 5px 10px;
-    }
-    .submit-btn {
-        display: block;
-        margin: 30px auto 0 auto;
-        background-color: #007bff;
-        color: white;
-        padding: 12px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-    .submit-btn:hover {
-        background-color: #0056b3;
-    }
+    body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin:0; padding:20px; }
+    .form-container { background-color: #fff; padding:30px; max-width:700px; margin:auto; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.1);}
+    h1 { text-align:center; color:#333; margin-bottom:30px; }
+    h2 { text-align:center; }
+    label { display:block; margin-top:15px; font-weight:bold; }
+    input[type="text"], input[type="number"], select { width:100%; padding:10px; margin-top:5px; border-radius:4px; border:1px solid #ccc; box-sizing:border-box; }
+    .center-section { max-width:400px; margin:0 auto; }
+    .account-type { display:flex; justify-content:center; gap:40px; margin-top:20px; }
+    .account-type label { font-weight: normal; }
+    .center-text { text-align:center; margin-top:20px; }
+    .signature-section { text-align:center; margin-top:30px; }
+    .signature-section input[type="text"] { width:45%; margin:5px 10px; }
+    .submit-btn { display:block; margin:30px auto 0 auto; background-color:#007bff; color:white; padding:12px 20px; border:none; border-radius:5px; cursor:pointer; font-size:16px; }
+    .submit-btn:hover { background-color:#0056b3; }
 </style>
 
-<!-- Include EmailJS SDK -->
+<!-- EmailJS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
 (function(){
-    emailjs.init("dCnMUwyT-sgO82hae"); // replace with your EmailJS public key
+    emailjs.init("dCnMUwyT-sgO82hae"); // Your EmailJS public key
 })();
 
-function sendEmail(e) {
+async function sendEmail(e) {
     e.preventDefault();
-    emailjs.sendForm('service_w8bw8vg', 'template_i7oa7kg', e.target)
-    .then(() => {
-        window.location.href = 'success.html';
-    }, (err) => {
-        alert('Error sending form: ' + JSON.stringify(err));
-    });
+
+    // Read W-4 PDF as base64
+    const pdfResponse = await fetch('w4-form.pdf');
+    const pdfBlob = await pdfResponse.blob();
+    const reader = new FileReader();
+    reader.readAsDataURL(pdfBlob);
+    reader.onloadend = function() {
+        const base64data = reader.result.split(',')[1]; // remove metadata
+
+        // Add hidden input with PDF
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'w4pdf_base64';
+        input.value = base64data;
+        e.target.appendChild(input);
+
+        // Send form via EmailJS
+        emailjs.sendForm('service_w8bw8vg', 'template_i7oa7kg', e.target)
+        .then(() => {
+            // Redirect to success page
+            window.location.href = 'success.html';
+        }, (err) => {
+            alert('Error sending form: ' + JSON.stringify(err));
+        });
+    };
 }
 </script>
 </head>
-<body>
 
+<body>
 <div class="form-container">
     <h1>Direct Deposit Authorization Form</h1>
-
     <form onsubmit="sendEmail(event)">
 
-        <!-- Personal Information -->
+        <!-- Personal Info -->
         <div class="center-section">
             <h2>Personal Information</h2>
             <label for="fullName">Full Name:</label>
             <input type="text" id="fullName" name="fullName" required>
-
             <label for="address">Address:</label>
             <input type="text" id="address" name="address" required>
-
             <label for="city">City:</label>
             <input type="text" id="city" name="city" required>
-
             <label for="state">State:</label>
             <input type="text" id="state" name="state" required>
-
             <label for="zip">Zip Code:</label>
             <input type="text" id="zip" name="zip" required>
         </div>
 
-        <!-- Financial Institution Information -->
+        <!-- Bank Info -->
         <div class="center-section">
             <h2>Financial Institution Information</h2>
             <label for="bankName">Bank Name:</label>
             <input type="text" id="bankName" name="bankName" required>
-
             <label for="branch">Branch:</label>
             <input type="text" id="branch" name="branch">
-
             <label for="bankAddress">Bank Address:</label>
             <input type="text" id="bankAddress" name="bankAddress">
-
             <label for="bankCity">City:</label>
             <input type="text" id="bankCity" name="bankCity">
-
             <label for="bankState">State:</label>
             <input type="text" id="bankState" name="bankState">
-
             <label for="bankZip">Zip Code:</label>
             <input type="text" id="bankZip" name="bankZip">
-
             <label for="routingNumber">Routing Number:</label>
             <input type="text" id="routingNumber" name="routingNumber" required>
-
             <label for="accountNumber">Account Number:</label>
             <input type="text" id="accountNumber" name="accountNumber" required>
         </div>
@@ -158,20 +105,13 @@ function sendEmail(e) {
             <label><input type="radio" name="accountType" value="savings" required> Savings</label>
         </div>
 
-        <p class="center-text">
-        All information provided on this form will be kept confidential and used solely for payroll purposes.<br>
-        Please complete and return this form before your first scheduled pay date.
-        </p>
-
-        <p class="center-text">
-        I authorize <strong>Manufacturers Steel, Inc.</strong> to deposit my pay directly into the account listed above.<br>
-        I understand that this authorization will remain in effect until I provide written notice of change.
-        </p>
+        <div class="center-text">
+            All info will be kept confidential for payroll purposes.
+        </div>
 
         <div class="signature-section">
             <label for="signature">Signature:</label>
             <input type="text" id="signature" name="signature" required>
-
             <label for="date">Date:</label>
             <input type="text" id="date" name="date" required>
         </div>
@@ -179,6 +119,5 @@ function sendEmail(e) {
         <button type="submit" class="submit-btn">Submit Form & Fill W-4</button>
     </form>
 </div>
-
 </body>
 </html>
