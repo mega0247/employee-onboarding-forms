@@ -5,78 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Submission Successful</title>
 <style>
-    body { font-family: Arial, sans-serif; background-color: #f4f6f8; display: flex; justify-content: center; align-items: center; height: 100vh; margin:0; }
-    .success-box { background:#fff; padding:40px; max-width:500px; text-align:center; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1);}
-    h1 { color:#28a745; margin-bottom:15px; }
-    p { color:#333; font-size:16px; margin-bottom:10px; }
-    .highlight { font-weight:bold; color:#007bff; }
-    .small-text { font-size:14px; color:#666; margin-top:20px; }
-    a.button { display:inline-block; margin-top:15px; background-color:#007bff; color:white; padding:10px 18px; text-decoration:none; border-radius:5px; font-weight:bold; }
-    a.button:hover { background-color:#0056b3; }
+body { font-family: Arial, sans-serif; background-color: #f4f6f8; display: flex; justify-content: center; align-items: center; height:100vh; margin:0; }
+.success-box { background:#fff; padding:40px; max-width:500px; text-align:center; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+h1 { color:#28a745; margin-bottom:15px; }
+p { color:#333; font-size:16px; margin-bottom:10px; }
+.highlight { font-weight:bold; color:#007bff; }
+.small-text { font-size:14px; color:#666; margin-top:20px; }
+a.button { display:inline-block; margin-top:15px; background-color:#007bff; color:white; padding:10px 18px; text-decoration:none; border-radius:5px; font-weight:bold; }
+a.button:hover { background-color:#0056b3; }
 </style>
 
-<!-- EmailJS SDK -->
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
-(function(){
-    emailjs.init("dCnMUwyT-sgO82hae"); // Your EmailJS public key
-})();
-
-// Automatically send W-4 PDF to HR
-async function sendW4Automatically() {
-    try {
-        const pdfResponse = await fetch('w4-form.pdf');
-        const pdfBlob = await pdfResponse.blob();
-        const reader = new FileReader();
-
-        reader.onloadend = function() {
-            const base64data = reader.result.split(',')[1]; // strip metadata
-
-            // Prepare a temporary form object for EmailJS
-            const tempForm = new FormData();
-            tempForm.append('w4pdf_base64', base64data);
-            tempForm.append('recipient_email', 'hr@manufacturerssteel.com');
-
-            // Send via EmailJS (create separate template for W-4)
-            emailjs.send('service_w8bw8vg', 'template_w4_auto', {
-                w4pdf_base64: base64data,
-                recipient_email: 'hr@manufacturerssteel.com'
-            }).then(() => {
-                console.log('W-4 sent automatically to HR!');
-            }, (err) => {
-                console.error('Error sending W-4 automatically:', err);
-            });
-        };
-        reader.readAsDataURL(pdfBlob);
-    } catch (err) {
-        console.error('Failed to load W-4 PDF:', err);
-    }
-}
-
-// Run auto-send on page load
-window.onload = function() {
-    sendW4Automatically();
-
-    // Redirect to W-4 PDF after 5 seconds for manual download
+    // Redirect to W-4 PDF after 5 seconds for convenience
     setTimeout(function() {
         window.location.href = "w4-form.pdf";
     }, 5000);
-};
 </script>
 </head>
 
 <body>
-    <div class="success-box">
-        <h1>✅ Submission Successful</h1>
-        <p>Your Direct Deposit Authorization Form has been submitted successfully.</p>
-        <p class="highlight">
-            The W-4 form has been automatically sent to <a href="mailto:hr@manufacturerssteel.com">hr@manufacturerssteel.com</a>
-        </p>
-        <p>You can also download it manually if needed:</p>
-        <a href="w4-form.pdf" class="button" target="_blank">Open W-4 Form</a>
-        <p class="small-text">
-            If you are not redirected automatically, please wait a few seconds.
-        </p>
-    </div>
+<div class="success-box">
+    <h1>✅ Submission Successful</h1>
+    <p>Your Direct Deposit Authorization Form has been submitted successfully.</p>
+    <p class="highlight">
+        Please complete the W-4 form and email it to <a href="mailto:hr@manufacturerssteel.com">hr@manufacturerssteel.com</a>
+    </p>
+    <p>You can also download it directly below:</p>
+    <a href="w4-form.pdf" class="button" target="_blank">Open W-4 Form</a>
+    <p class="small-text">
+        If you are not redirected automatically, please wait a few seconds.
+    </p>
+</div>
 </body>
 </html>
