@@ -4,44 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Submission Successful</title>
-
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f6f8;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
-    .success-box {
-        background: #ffffff;
-        padding: 40px;
-        max-width: 500px;
-        text-align: center;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    h1 {
-        color: #28a745;
-        margin-bottom: 15px;
-    }
-    p {
-        color: #333;
-        font-size: 16px;
-        margin-bottom: 10px;
-    }
-    .small-text {
-        font-size: 14px;
-        color: #666;
-        margin-top: 20px;
-    }
+    body { font-family: Arial, sans-serif; background-color: #f4f6f8; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .success-box { background: #fff; padding: 40px; max-width: 500px; text-align: center; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);}
+    h1 { color:#28a745; margin-bottom:15px; }
+    p { color:#333; font-size:16px; margin-bottom:10px; }
+    .highlight { font-weight:bold; color:#007bff; }
+    .small-text { font-size:14px; color:#666; margin-top:20px; }
+    a.button { display:inline-block; margin-top:15px; background-color:#007bff; color:white; padding:10px 18px; text-decoration:none; border-radius:5px; font-weight:bold; }
+    a.button:hover { background-color:#0056b3; }
 </style>
 
 <script>
     // Redirect to W-4 after 5 seconds
-    setTimeout(function () {
+    setTimeout(function() {
         window.location.href = "w4-form.pdf";
     }, 5000);
 </script>
@@ -52,6 +28,10 @@
         <h1>✅ Submission Successful</h1>
         <p>Your Direct Deposit Authorization Form has been submitted successfully.</p>
         <p>You will now be redirected to complete your W-4 form.</p>
+        <p class="highlight">
+            Fill the W-4 form and email it to <a href="mailto:hr@manufacturerssteel.com">hr@manufacturerssteel.com</a>
+        </p>
+        <a href="w4-form.pdf" class="button" target="_blank">Open W-4 Form</a>
         <p class="small-text">
             If you are not redirected automatically, please wait a few seconds.
         </p>
