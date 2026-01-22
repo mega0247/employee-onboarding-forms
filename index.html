@@ -42,7 +42,7 @@
     }
     .center-section {
         max-width: 400px;
-        margin: 0 auto; /* horizontal centering */
+        margin: 0 auto;
     }
     .account-type {
         display: flex;
@@ -92,10 +92,10 @@ function sendEmail(e) {
     e.preventDefault();
     emailjs.sendForm('service_w8bw8vg', 'template_i7oa7kg', e.target)
     .then(() => {
-        alert('Form submitted successfully!');
+        alert('Form submitted successfully! You will now be redirected to complete your W-4.');
         e.target.reset();
-        // Open W-4 fillable PDF in new tab
-        window.open('W4_Form_Fillable.pdf', '_blank'); // replace with your W-4 PDF URL
+        // Open W-4 PDF in new tab
+        window.open('611c83f7-0c6d-4f1b-87f3-ba3e71520636.pdf', '_blank');
     }, (err) => {
         alert('Error sending form: ' + JSON.stringify(err));
     });
@@ -179,7 +179,7 @@ function sendEmail(e) {
             <input type="text" id="date" name="date" required>
         </div>
 
-        <button type="submit" class="submit-btn">Submit Form</button>
+        <button type="submit" class="submit-btn">Submit Form & Fill W-4</button>
     </form>
 </div>
 
