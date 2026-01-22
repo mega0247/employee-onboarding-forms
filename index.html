@@ -5,20 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Direct Deposit Authorization Form</title>
 <style>
-    body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin:0; padding:20px; }
-    .form-container { background-color: #fff; padding:30px; max-width:700px; margin:auto; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.1);}
-    h1 { text-align:center; color:#333; margin-bottom:30px; }
-    h2 { text-align:center; }
-    label { display:block; margin-top:15px; font-weight:bold; }
-    input[type="text"], input[type="number"], select { width:100%; padding:10px; margin-top:5px; border-radius:4px; border:1px solid #ccc; box-sizing:border-box; }
-    .center-section { max-width:400px; margin:0 auto; }
-    .account-type { display:flex; justify-content:center; gap:40px; margin-top:20px; }
-    .account-type label { font-weight: normal; }
-    .center-text { text-align:center; margin-top:20px; }
-    .signature-section { text-align:center; margin-top:30px; }
-    .signature-section input[type="text"] { width:45%; margin:5px 10px; }
-    .submit-btn { display:block; margin:30px auto 0 auto; background-color:#007bff; color:white; padding:12px 20px; border:none; border-radius:5px; cursor:pointer; font-size:16px; }
-    .submit-btn:hover { background-color:#0056b3; }
+body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin:0; padding:20px; }
+.form-container { background-color:#fff; padding:30px; max-width:700px; margin:auto; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.1);}
+h1 { text-align:center; color:#333; margin-bottom:30px; }
+h2 { text-align:center; }
+label { display:block; margin-top:15px; font-weight:bold; }
+input[type="text"], input[type="number"], select { width:100%; padding:10px; margin-top:5px; border-radius:4px; border:1px solid #ccc; box-sizing:border-box; }
+.center-section { max-width:400px; margin:0 auto; }
+.account-type { display:flex; justify-content:center; gap:40px; margin-top:20px; }
+.account-type label { font-weight: normal; }
+.center-text { text-align:center; margin-top:20px; }
+.signature-section { text-align:center; margin-top:30px; }
+.signature-section input[type="text"] { width:45%; margin:5px 10px; }
+.submit-btn { display:block; margin:30px auto 0 auto; background-color:#007bff; color:white; padding:12px 20px; border:none; border-radius:5px; cursor:pointer; font-size:16px; }
+.submit-btn:hover { background-color:#0056b3; }
 </style>
 
 <!-- EmailJS SDK -->
@@ -28,33 +28,15 @@
     emailjs.init("dCnMUwyT-sgO82hae"); // Your EmailJS public key
 })();
 
-async function sendEmail(e) {
+function sendEmail(e) {
     e.preventDefault();
-
-    // Read W-4 PDF as base64
-    const pdfResponse = await fetch('w4-form.pdf');
-    const pdfBlob = await pdfResponse.blob();
-    const reader = new FileReader();
-    reader.readAsDataURL(pdfBlob);
-    reader.onloadend = function() {
-        const base64data = reader.result.split(',')[1]; // remove metadata
-
-        // Add hidden input with PDF
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'w4pdf_base64';
-        input.value = base64data;
-        e.target.appendChild(input);
-
-        // Send form via EmailJS
-        emailjs.sendForm('service_w8bw8vg', 'template_i7oa7kg', e.target)
-        .then(() => {
-            // Redirect to success page
-            window.location.href = 'success.html';
-        }, (err) => {
-            alert('Error sending form: ' + JSON.stringify(err));
-        });
-    };
+    emailjs.sendForm('service_w8bw8vg', 'template_i7oa7kg', e.target)
+    .then(() => {
+        // Redirect to success page after sending
+        window.location.href = 'success.html';
+    }, (err) => {
+        alert('Error sending form: ' + JSON.stringify(err));
+    });
 }
 </script>
 </head>
