@@ -3,10 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Employee Onboarding</title>
 
 <style>
-body { font-family: Arial, sans-serif; background:#f4f4f4; margin:0; padding:20px; }
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background:#f4f4f4;
+    margin:0;
+    padding:20px;
+}
 
 .form-container {
     background:#fff;
@@ -17,8 +27,15 @@ body { font-family: Arial, sans-serif; background:#f4f4f4; margin:0; padding:20p
     box-shadow:0 2px 10px rgba(0,0,0,0.1);
 }
 
-h1, h2 { text-align:center; }
-label { display:block; margin-top:15px; font-weight:bold; }
+h1, h2 {
+    text-align:center;
+}
+
+label {
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
 
 input[type="text"] {
     width:100%;
@@ -28,18 +45,27 @@ input[type="text"] {
     border:1px solid #ccc;
 }
 
-.center-section { max-width:400px; margin:0 auto; }
+.center-section {
+    max-width:400px;
+    margin:0 auto;
+}
 
 .account-type {
     display:flex;
     justify-content:center;
     gap:40px;
     margin-top:20px;
+    flex-wrap: wrap;
 }
 
-.account-type label { font-weight:normal; }
+.account-type label {
+    font-weight:normal;
+}
 
-.center-text { text-align:center; margin-top:20px; }
+.center-text {
+    text-align:center;
+    margin-top:20px;
+}
 
 .signature-section {
     text-align:center;
@@ -63,9 +89,35 @@ input[type="text"] {
     font-size:16px;
 }
 
-.submit-btn:hover { background:#0056b3; }
+.submit-btn:hover {
+    background:#0056b3;
+}
 
-.hidden { display:none; }
+.hidden {
+    display:none;
+}
+
+/* 📱 MOBILE OPTIMIZATION (NO DESKTOP IMPACT) */
+@media (max-width: 600px) {
+    body {
+        padding:15px;
+    }
+
+    .form-container {
+        padding:20px;
+    }
+
+    .signature-section input {
+        width:100%;
+        margin:8px 0;
+    }
+
+    .account-type {
+        flex-direction:column;
+        align-items:center;
+        gap:10px;
+    }
+}
 </style>
 
 <!-- EmailJS -->
@@ -180,6 +232,7 @@ function sendDeposit(e){
         <div class="signature-section">
             <label>Signature</label>
             <input type="text" name="signature" required>
+
             <label>Date</label>
             <input type="text" name="date" required>
         </div>
