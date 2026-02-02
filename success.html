@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Onboarding Submission Complete</title>
 
+<!-- Uploadcare -->
+<script>
+  UPLOADCARE_PUBLIC_KEY = "7c0fc9909edc9b633c64";
+</script>
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
 <style>
 body {
     font-family: Arial, sans-serif;
@@ -25,42 +31,19 @@ body {
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-h1 {
-    color: #28a745;
-    margin-bottom: 15px;
-}
+h1 { color: #28a745; }
 
-p {
-    color: #333;
-    font-size: 16px;
-    margin-bottom: 12px;
-    line-height: 1.5;
-}
-
-.highlight {
-    font-weight: bold;
-    color: #007bff;
+.security {
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+    padding:15px;
+    font-size:14px;
+    margin:20px 0;
 }
 
 .small-text {
     font-size: 14px;
     color: #666;
-    margin-top: 20px;
-}
-
-a.button {
-    display: inline-block;
-    margin-top: 15px;
-    background-color: #007bff;
-    color: #ffffff;
-    padding: 12px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-a.button:hover {
-    background-color: #0056b3;
 }
 </style>
 </head>
@@ -71,31 +54,30 @@ a.button:hover {
     <h1>✅ Submission Successful</h1>
 
     <p>
-        Thank you for completing your onboarding information for
-        <strong>Manufacturers Steel.</strong>
+        Your <strong>Direct Deposit Authorization</strong> has been securely received.
     </p>
 
-    <p>
-        Your <strong>Direct Deposit Authorization</strong> has been received and will be
-        used solely for payroll processing.
-    </p>
+    <div class="security">
+        🔒 <strong>Secure W-4 Upload</strong><br>
+        For security reasons, tax documents are uploaded through an encrypted system.
+        Please upload your completed IRS W-4 form below.
+    </div>
 
-    <p class="highlight">
-        Next Step: Complete Your W-4 Tax Form
-    </p>
-
-    <p>
-        The IRS W-4 form is required for employment tax reporting.
-        This form is completed separately as instructed by HR.
-    </p>
-
-    <a href="w4-form.pdf" class="button" target="_blank">
-        Open W-4 Form
-    </a>
+    <input
+      type="hidden"
+      role="uploadcare-uploader"
+      data-clearable
+      data-file-types=".pdf"
+      data-multiple="false"
+      data-max-size="5242880"
+    />
 
     <p class="small-text">
-        🔒 Please do not email completed tax forms unless explicitly instructed
-        through a secure payroll system.
+        PDF only • Max size 5MB • Files are encrypted and accessible only to HR
+    </p>
+
+    <p class="small-text">
+        Manufacturers Steel — All information is confidential and used solely for employment purposes.
     </p>
 </div>
 
