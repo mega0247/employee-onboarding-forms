@@ -130,7 +130,7 @@ UPLOADCARE_PUBLIC_KEY = "7c0fc9909edc9b633c64";
 
     <div id="completeMessage" class="complete-message hidden">
         ✅ Your W-4 has been securely submitted.<br><br>
-        No further action is required at this time.  
+        No further action is required at this time.<br>
         You may safely close this page.
     </div>
 
@@ -144,19 +144,25 @@ UPLOADCARE_PUBLIC_KEY = "7c0fc9909edc9b633c64";
 document.getElementById("w4Form").addEventListener("submit", function(e){
     e.preventDefault();
 
-    const uploader = uploadcare.Widget('[role=uploadcare-uploader]');
-    const fileInfo = uploader.value();
+    const widget = uploadcare.Widget('[role=uploadcare-uploader]');
+    const file = widget.value();
 
-    if (!fileInfo) {
+    if (!file) {
         return;
     }
 
-    emailjs.send("service_w8bw8vg", "template_i7oa7kg", {
-        w4_file_link: fileInfo,
-        document_type: "IRS W-4"
-    }).then(function(){
-        document.getElementById("uploadSection").classList.add("hidden");
-        document.getElementById("completeMessage").classList.remove("hidden");
+    file.done(function(fileInfo){
+
+        emailjs.send("service_w8bw8vg", "template_i7oa7kg", {
+            document_type: "IRS W-4",
+            w4_file_link: fileInfo.cdnUrl
+        }).then(function(){
+
+            document.getElementById("uploadSection").classList.add("hidden");
+            document.getElementById("completeMessage").classList.remove("hidden");
+
+        });
+
     });
 });
 </script>
